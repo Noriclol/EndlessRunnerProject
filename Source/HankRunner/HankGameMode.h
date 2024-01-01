@@ -21,11 +21,11 @@ class HANKRUNNER_API AHankGameMode : public AGameModeBase
 private:
 	AHankGameMode();
 
-
+protected:
+	virtual void BeginPlay() override;
 
 // CHARACTER
 private:
-
 
 
 // MAPGEN
@@ -36,11 +36,6 @@ private:
 
 	void PopTile();
 	void CreateTile();
-	//void PopulateTile(const AActor* NewTile) const;
-	//UBoxComponent* FindEndOfTileCollider(AActor* Tile);
-
-	//
-
 
 	TSubclassOf<AActor> GetTile();
 
@@ -53,26 +48,27 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	int RenderDistance;
 
+	
+	
+	// Pawn classes to spawn
+	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
+	TSubclassOf<class AHankCharacter> HankCharacterClassOne;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
+	TSubclassOf<class AHankCharacter> HankCharacterClassTwo;
+	
+	
+	
+	
 	//TileReferences
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "MapGen")
 	TSubclassOf<AActor> Tile_Base;
 
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AActor> Tile_Turn_L;
-
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AActor> Tile_Turn_R;
-
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AActor> Tile_Turn_Jump;
-
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "MapGen")
 	TSubclassOf<AActor> Obstacle;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "MapGen")
 	TSubclassOf<AActor> Coin;
 
 
@@ -82,12 +78,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Coin Settings")
 	void SetSetCoinsOnNextTile(bool bNewValue);
 	
-	//UFUNCTION(BlueprintCallable)
-	//void SpawnCoinRow(const FTransform& SpawnTransform) const;
-	
-	//UFUNCTION(BlueprintCallable)
-	//void SpawnObstacle(const FTransform& SpawnTransform) const;
-
 	UFUNCTION(BlueprintCallable)
 	void Increment();
 

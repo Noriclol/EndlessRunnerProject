@@ -9,17 +9,6 @@ AHankCharacter::AHankCharacter()
     // Set size for collision capsule
     GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
-
-    // camera boom
-    CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-    CameraBoom->SetupAttachment(RootComponent);
-    CameraBoom->TargetArmLength = 300.0f;
-    CameraBoom->bUsePawnControlRotation = true;
-
-    // camera
-    FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-    FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
-    FollowCamera->bUsePawnControlRotation = false; 
 }
 
 
@@ -27,7 +16,6 @@ AHankCharacter::AHankCharacter()
 void AHankCharacter::BeginPlay()
 {
     Super::BeginPlay();
-
 }
 
 
@@ -35,21 +23,12 @@ void AHankCharacter::BeginPlay()
 void AHankCharacter::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-    SetActorLocation(GetActorLocation() + FVector(playerSpeed, 0.0f, 0.0f));
-    if (!hasDiead)
-        playerSpeed += 0.001f;
+    //SetActorLocation(GetActorLocation() + FVector(playerSpeed, 0.0f, 0.0f));
+    //if (!hasDiead)
+    //    playerSpeed += 0.001f;
 }
 
 
-
-void AHankCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-    Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-    //Input Setup
-    //PlayerInputComponent->BindAxis("LeftRight", this, &AHankCharacter::LeftRight);
-    //PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AHankCharacter::Jump);
-}
 
 void AHankCharacter::StopMoving()
 {
