@@ -58,7 +58,9 @@ public:
 	TSubclassOf<class AHankCharacter> HankCharacterClassTwo;
 	
 	
-	
+	// Camera class to spawn
+	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
+	TSubclassOf<class AGameCamera> GameCameraClass;
 	
 	//TileReferences
 

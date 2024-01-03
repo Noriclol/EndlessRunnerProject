@@ -23,9 +23,9 @@ void AHankCharacter::BeginPlay()
 void AHankCharacter::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-    //SetActorLocation(GetActorLocation() + FVector(playerSpeed, 0.0f, 0.0f));
-    //if (!hasDiead)
-    //    playerSpeed += 0.001f;
+    SetActorLocation(GetActorLocation() + FVector(playerSpeed, 0.0f, 0.0f));
+    if (!hasDied)
+        playerSpeed += 0.001f;
 }
 
 
@@ -33,7 +33,7 @@ void AHankCharacter::Tick(float DeltaTime)
 void AHankCharacter::StopMoving()
 {
     playerSpeed = 0;
-    hasDiead = true;
+    hasDied = true;
 }
 
 void AHankCharacter::Jump()
@@ -45,9 +45,24 @@ void AHankCharacter::LeftRight(float Value)
 {
     if (Value != 0.0f)
     {
-        UE_LOG(LogTemp, Warning, TEXT("LeftRight function called"));
-
+        if (GEngine)
+        {
+            GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("EEEEEEEEEEEEE"));
+        }
         AddMovementInput(GetActorRightVector(), Value);
     }
+}
+
+void AHankCharacter::Die()
+{
+}
+
+void AHankCharacter::LooseLife()
+{
+}
+
+void AHankCharacter::PickupCoin()
+{
+    coins ++;
 }
 

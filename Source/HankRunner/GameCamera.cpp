@@ -16,8 +16,8 @@ AGameCamera::AGameCamera()
 	//place camera at root
 
 	//move the camera in a higher position and rotate towards the ground
-	CameraComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 500.0f));
-	CameraComponent->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
+	CameraComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	CameraComponent->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
 
 }
 

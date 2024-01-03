@@ -37,7 +37,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	float playerSpeed = 5.0f;
-	bool hasDiead = false;
+
+	bool hasDied = false;
+	int lives = 3;
+	int coins = 0;
 
 public:
 
@@ -48,5 +51,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LeftRight(float Value);
 
+
+
+	void Die();
+
+	void LooseLife();
+
+	void PickupCoin();
 
 };
