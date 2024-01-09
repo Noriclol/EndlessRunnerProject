@@ -8,6 +8,10 @@
 void AHankController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
+    if (GEngine)
+    {
+        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("SetupInputController HankController"));
+    }
 
     InputComponent->BindAxis("PlayerOneLeftRight", this, &AHankController::MovePlayerOneLeftRight);
     InputComponent->BindAction("PlayerOneJump", IE_Pressed, this, &AHankController::PlayerOneJump);
@@ -26,8 +30,6 @@ void AHankController::ReturnToMainMenu()
 }
 
 
-
-
 void AHankController::MovePlayerOneLeftRight(float value)
 {
     //if (GEngine)
@@ -38,7 +40,7 @@ void AHankController::MovePlayerOneLeftRight(float value)
     //}
     if (PlayerOnePawn)
     {
-        Possess(PlayerOnePawn);
+        //Possess(PlayerOnePawn);
         PlayerOnePawn->LeftRight(value);
     }
 }
@@ -51,7 +53,7 @@ void AHankController::PlayerOneJump()
     //}
     if (PlayerOnePawn)
     {
-        Possess(PlayerOnePawn);
+        //Possess(PlayerOnePawn);
         PlayerOnePawn->Jump();
     }
 }
@@ -66,7 +68,7 @@ void AHankController::MovePlayerTwoLeftRight(float value)
     //}
     if (PlayerTwoPawn)
     {
-        Possess(PlayerTwoPawn);
+        //Possess(PlayerTwoPawn);
         PlayerTwoPawn->LeftRight(value);
     }
 }
@@ -79,34 +81,20 @@ void AHankController::PlayerTwoJump()
     //}
     if (PlayerTwoPawn)
     {
-        Possess(PlayerTwoPawn);
+        //Possess(PlayerTwoPawn);
         PlayerTwoPawn->Jump();
     }
 }
 
 
-void AHankController::SetPlayerTwoPawn(AHankCharacter* pawn)
+void AHankController::SetPlayerTwoPawn(AHankCharacter* newPawn)
 {
-    if (pawn != nullptr)
-    {
-        PlayerTwoPawn = pawn;
-
-        // Optionally, you can also possess the pawn immediately
-        // Possess(PlayerOnePawn);
-
-        // Or perform any other initialization required for the pawn
-    }
+    if (newPawn != nullptr)
+        PlayerTwoPawn = newPawn;
 }
 
-void AHankController::SetPlayerOnePawn(AHankCharacter* pawn)
+void AHankController::SetPlayerOnePawn(AHankCharacter* newPawn)
 {
-    if (pawn != nullptr)
-    {
-        PlayerOnePawn = pawn;
-
-        // Optionally, you can also possess the pawn immediately
-        // Possess(PlayerOnePawn);
-
-        // Or perform any other initialization required for the pawn
-    }
+    if (newPawn != nullptr)
+        PlayerOnePawn = newPawn;
 }

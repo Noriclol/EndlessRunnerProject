@@ -3,8 +3,9 @@
 
 #include "MapData.h"
 
-MapData::MapData()
+MapData::MapData(FVector pos)
 {
+	newPosition.SetLocation(pos);
 }
 
 MapData::~MapData()

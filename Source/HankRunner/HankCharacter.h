@@ -9,29 +9,15 @@
 
 #include "HankCharacter.generated.h"
 
+/**
+ * base class for the player characters
+ */
 UCLASS()
 class HANKRUNNER_API AHankCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-protected:
-
-
-	// Collider
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collider", meta = (AllowPrivateAccess = "true"))
-	class UCapsuleComponent* CapsuleCollider;
-
-
-	virtual void BeginPlay() override;
-
-public:
-
-	AHankCharacter();
-
-	virtual void Tick(float DeltaTime) override;
-
-	UFUNCTION(BlueprintCallable)
-	void StopMoving();
+	// VARIABLES
 
 private:
 
@@ -45,18 +31,42 @@ private:
 public:
 
 
+
+protected:
+
+
+	// Collider
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collider", meta = (AllowPrivateAccess = "true"))
+	class UCapsuleComponent* CapsuleCollider;
+
+
+
+
+
+	// FUNCTIONS
+
+public:
+
 	// Input Functions
 	virtual void Jump() override;
+
+	void Die();
+
+	bool LooseLife();
+
+	void PickupCoin();
 
 	UFUNCTION(BlueprintCallable)
 	void LeftRight(float Value);
 
+protected:
 
+	virtual void BeginPlay() override;
 
-	void Die();
+	AHankCharacter();
 
-	void LooseLife();
+	virtual void Tick(float DeltaTime) override;
 
-	void PickupCoin();
-
+	UFUNCTION(BlueprintCallable)
+	void StopMoving();
 };

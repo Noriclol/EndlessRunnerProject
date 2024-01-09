@@ -7,7 +7,7 @@
 #include "HankController.generated.h"
 
 /**
- * 
+ * Controller for both players
  */
 UCLASS()
 class HANKRUNNER_API AHankController : public APlayerController
@@ -20,6 +20,7 @@ public:
 private:
 
 	class AHankCharacter* PlayerOnePawn;
+
 	class AHankCharacter* PlayerTwoPawn;
 
 	void MovePlayerOneLeftRight(float value);
@@ -31,6 +32,8 @@ private:
 	void ReturnToMainMenu();
 
 public:
-	void SetPlayerOnePawn(AHankCharacter* pawn);
-	void SetPlayerTwoPawn(AHankCharacter* pawn);
+	UFUNCTION(BlueprintCallable)
+	void SetPlayerOnePawn(AHankCharacter* newPawn);
+	UFUNCTION(BlueprintCallable)
+	void SetPlayerTwoPawn(AHankCharacter* newPawn);
 };

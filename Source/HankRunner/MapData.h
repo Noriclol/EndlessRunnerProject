@@ -5,11 +5,22 @@
 #include "CoreMinimal.h"
 
 /**
- * 
+ * Mapdata struct containing all the data for the map
  */
 class HANKRUNNER_API MapData
 {
 public:
-	MapData();
+
+	FTransform newPosition = FTransform();
+
+	TArray<AActor*> Stack;
+
+	TArray<AActor*> Obstacles;
+
+	TArray<AActor*> Collectables;
+
+	bool SetCoinsOnNextTile;
+
+	MapData(FVector positionOne = FVector(0, 0, 0));
 	~MapData();
 };

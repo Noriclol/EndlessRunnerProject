@@ -10,12 +10,20 @@
 
 
 /**
- * 
+ * GameMode class to specify pawn and playercontroller
+ * also holding the map generation stuff
  */
 UCLASS()
 class HANKRUNNER_API AHankGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
+
+
+public:
+	class AGameCamera* camera;
+	class AHankController* playerController;
+
+	class AMapGeneration* mapGeneration;
 
 
 private:
@@ -24,31 +32,12 @@ private:
 protected:
 	virtual void BeginPlay() override;
 
-// CHARACTER
-private:
-
-
-// MAPGEN
-
-	FTransform NextPiece = FTransform();
-	TArray<AActor*> PieceStack;
-
-
-	void PopTile();
-	void CreateTile();
-
-	TSubclassOf<AActor> GetTile();
-
+	UFUNCTION(BlueprintCallable)
+	void SpawnPawns();
+	UFUNCTION(BlueprintCallable)
+	void SpawnMap();
 public:
 
-
-	UPROPERTY(EditDefaultsOnly)
-	float CoinSpacing;
-
-	UPROPERTY(VisibleAnywhere)
-	int RenderDistance;
-
-	
 	
 	// Pawn classes to spawn
 	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
@@ -61,28 +50,14 @@ public:
 	// Camera class to spawn
 	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
 	TSubclassOf<class AGameCamera> GameCameraClass;
+
 	
-	//TileReferences
-
-	UPROPERTY(EditDefaultsOnly, Category = "MapGen")
-	TSubclassOf<AActor> Tile_Base;
-
-	UPROPERTY(EditDefaultsOnly, Category = "MapGen")
-	TSubclassOf<AActor> Obstacle;
-
-	UPROPERTY(EditDefaultsOnly, Category = "MapGen")
-	TSubclassOf<AActor> Coin;
-
-
-;	UPROPERTY(BlueprintReadWrite, Category = "Coin Settings")
-	bool SetCoinsOnNextTile;
-
-	UFUNCTION(BlueprintCallable, Category = "Coin Settings")
-	void SetSetCoinsOnNextTile(bool bNewValue);
 	
-	UFUNCTION(BlueprintCallable)
-	void Increment();
+	// Camera class to spawn
+	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
+	TSubclassOf<class AMapGeneration> mapGenerationClass;
 
-	UFUNCTION(BlueprintCallable)
-	void StartTiles();
+	
+
+
 };
