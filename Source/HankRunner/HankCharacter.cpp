@@ -23,9 +23,9 @@ void AHankCharacter::BeginPlay()
 void AHankCharacter::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-    //SetActorLocation(GetActorLocation() + FVector(playerSpeed, 0.0f, 0.0f));
-    //if (!hasDied)
-    //    playerSpeed += 0.001f;
+    SetActorLocation(GetActorLocation() + FVector(playerSpeed, 0.0f, 0.0f));
+    if (!hasDied)
+        playerSpeed += 0.001f;
 }
 
 
@@ -62,10 +62,6 @@ void AHankCharacter::Die()
 	}
 }
 
-bool AHankCharacter::LooseLife()
-{
-    return true;
-}
 
 void AHankCharacter::PickupCoin()
 {

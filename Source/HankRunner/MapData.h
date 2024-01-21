@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
+#include "FloorTile.h"
 /**
  * Mapdata struct containing all the data for the map
  */
@@ -13,14 +13,14 @@ public:
 
 	FTransform newPosition = FTransform();
 
-	TArray<AActor*> Stack;
+	TArray<AFloorTile*> Stack;
 
 	TArray<AActor*> Obstacles;
 
 	TArray<AActor*> Collectables;
 
 	bool SetCoinsOnNextTile;
-
+	bool firstTile = true;
 	MapData(FVector positionOne = FVector(0, 0, 0));
 	~MapData();
 };

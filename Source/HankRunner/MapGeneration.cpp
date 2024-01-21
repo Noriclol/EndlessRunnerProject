@@ -24,18 +24,51 @@ void AMapGeneration::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+
+    if (mapgenerated)
+        MoveMap();
+        gamespeed += 0.001f;
+
+    
+    //loop through all the tiles in maps.
+        for (int i = 0; i < TrackOne.Stack.Num(); i++)
+        {
+            AFloorTile* tile = TrackOne.Stack[i];
+            //if the tile is out of bounds, pop it and create a new one
+            if (tile->GetActorLocation().X < cut_off)
+            {
+                Increment(&TrackOne);
+            }
+        }
+        for (int i = 0; i < TrackTwo.Stack.Num(); i++)
+        {
+            AFloorTile* tile = TrackTwo.Stack[i];
+			//if the tile is out of bounds, pop it and create a new one
+            if (tile->GetActorLocation().X < cut_off)
+            {
+				Increment(&TrackTwo);
+			}
+        }
+
+
+	//if (TrackOne.Stack.Num() < RenderDistance)
+	//{
+	//	Increment(&TrackOne);
+	//}
+	//if (TrackTwo.Stack.Num() < RenderDistance)
+	//{
+	//	Increment(&TrackTwo);
+	//}   
 }
 
 void AMapGeneration::StartTiles()
 {
-
-
-
     for (int i = 0; i < RenderDistance; i++)
     {
         CreateTile(&TrackOne);
         CreateTile(&TrackTwo);
     }
+    mapgenerated = true;
 }
 
 void AMapGeneration::PopTile(MapData* data)
@@ -50,16 +83,31 @@ void AMapGeneration::PopTile(MapData* data)
 
 void AMapGeneration::CreateTile(MapData* data)
 {
-
-    AActor* NewTile = GetWorld()->SpawnActor<AActor>(Tile_Base, data->newPosition.GetLocation(), data->newPosition.Rotator());
-    if (NewTile)
+    if (data->firstTile) 
     {
-        UArrowComponent* NextTransform = Cast<UArrowComponent>(NewTile->GetComponentByClass(UArrowComponent::StaticClass()));
-
-        if (NextTransform)
-            data->newPosition = NextTransform->GetComponentTransform();
-
+        //place a tile at the end of the stack
+        AFloorTile* NewTile = GetWorld()->SpawnActor<AFloorTile>(Tile_Base, data->newPosition.GetLocation(), data->newPosition.Rotator());
+        if (NewTile) 
+        {
+            // Fetch the next transform from the top of the stack and spawn a new tile
+            UArrowComponent* NextTransform = Cast<UArrowComponent>(data->Stack.Last()->GetComponentByClass(UArrowComponent::StaticClass()));
+            if (NextTransform)
+                data->newPosition = NextTransform->GetComponentTransform();
+        }
+        data->firstTile = false;
     }
+    else 
+    {
+        //place a tile at the start
+    }
+
+    // Fetch the next transform from the top of the stack and spawn a new tile
+    UArrowComponent* NextTransform = Cast<UArrowComponent>(data->Stack.Last()->GetComponentByClass(UArrowComponent::StaticClass()));
+    if (NextTransform)
+        data->newPosition = NextTransform->GetComponentTransform();
+
+    AFloorTile* NewTile = GetWorld()->SpawnActor<AFloorTile>(Tile_Base, data->newPosition.GetLocation(), data->newPosition.Rotator());
+
     data->Stack.Add(NewTile);
     //Populate Tile?
 }
@@ -75,6 +123,8 @@ void AMapGeneration::PopulateTile(AFloorTile* NewTile)
     UBoxComponent* Spawnpoint_Left;
     UBoxComponent* Spawnpoint_Middle;
     UBoxComponent* Spawnpoint_Right;
+
+    UBoxComponent* CollisionBox;
 
     for (int i = 0; i < boxes.Num(); i++)
     {
@@ -95,6 +145,10 @@ void AMapGeneration::PopulateTile(AFloorTile* NewTile)
             {
                 Spawnpoint_Right = Cast<UBoxComponent>(child);
             }
+            else if (name.Equals(TEXT("CollisionBox")))
+			{
+				CollisionBox = Cast<UBoxComponent>(child);
+			}
         }
     }
     ////if all spawn points are found
@@ -120,12 +174,30 @@ void AMapGeneration::PopulateTile(AFloorTile* NewTile)
     //}
 }
 
+
+
+
+
+
+
 void AMapGeneration::SetSetCoinsOnNextTile(MapData* data, bool bNewValue)
 {
     data->SetCoinsOnNextTile = bNewValue;
 }
 
-
+void AMapGeneration::MoveMap()
+{
+    for (size_t i = 0; i < TrackOne.Stack.Num() ; i++)
+    {
+        AFloorTile* tile = TrackOne.Stack[i];
+        tile->SetActorLocation(tile->GetActorLocation() + FVector(-gamespeed, 0.0f, 0.0f));
+    }
+    for (size_t i = 0; i < TrackOne.Stack.Num(); i++)
+    {
+        AFloorTile* tile = TrackTwo.Stack[i];
+        tile->SetActorLocation(tile->GetActorLocation() + FVector(-gamespeed, 0.0f, 0.0f));
+    }
+}
 
 
 

@@ -36,6 +36,11 @@ protected:
 	void SpawnPawns();
 	UFUNCTION(BlueprintCallable)
 	void SpawnMap();
+
+	void IncrementLaneOne();
+	void IncrementLaneTwo();
+
+
 public:
 
 	
@@ -52,12 +57,8 @@ public:
 	TSubclassOf<class AGameCamera> GameCameraClass;
 
 	
-	
 	// Camera class to spawn
 	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
 	TSubclassOf<class AMapGeneration> mapGenerationClass;
-
-	
-
 
 };

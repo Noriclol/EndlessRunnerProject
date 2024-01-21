@@ -27,6 +27,11 @@ void AFloorTile::Tick(float DeltaTime)
 
 }
 
+void AFloorTile::MoveTile(float DeltaTime, float speed)
+{
+    SetActorLocation(GetActorLocation() + FVector(speed, 0.0f, 0.0f));
+}
+
 void AFloorTile::SpawnObstacle(FVector& SpawnLocation)
 {
 	//GetWorld->SpawnActor<AActor>(Obstacle, SpawnLocation, FRotator::ZeroRotator);

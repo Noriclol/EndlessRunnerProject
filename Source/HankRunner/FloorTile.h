@@ -21,6 +21,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "MapGen")
 	TSubclassOf<class ACoin> Coin;
 
+	
+	
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -29,6 +32,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+
+	void MoveTile(float DeltaTime, float speed);
 
 	void SpawnObstacle(FVector& SpawnLocation);
 

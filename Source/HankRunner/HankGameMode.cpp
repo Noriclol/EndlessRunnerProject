@@ -97,3 +97,16 @@ void AHankGameMode::SpawnMap()
     mapGeneration->StartTiles();
 }
 
+void AHankGameMode::IncrementLaneOne()
+{
+    mapGeneration->Increment(&mapGeneration->TrackOne);
+}
+
+void AHankGameMode::IncrementLaneTwo()
+{
+    mapGeneration->Increment(&mapGeneration->TrackTwo);
+}
+
+
+
+

@@ -29,6 +29,12 @@ public:
 	TSubclassOf<class AFloorTile> Tile_Base;
 
 
+	float cut_off = -1000.0f;
+	float gamespeed = 5.0f;
+
+	bool gameover = false;
+	bool mapgenerated = false;
+
 
 	// MapData
 	MapData TrackOne;
@@ -48,7 +54,7 @@ public:
 
 	void SetSetCoinsOnNextTile(MapData* data, bool bNewValue);
 
-
+	void MoveMap();
 
 protected:
 	// Called when the game starts or when spawned
