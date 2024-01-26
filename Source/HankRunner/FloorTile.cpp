@@ -13,12 +13,40 @@ AFloorTile::AFloorTile()
 
 }
 
+
+
 // Called when the game starts or when spawned
 void AFloorTile::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
+
+//void AFloorTile::BeginDestroy()
+//{
+//    // Perform any additional cleanup needed for Obstacles and Coins
+//    for (AObstacle* obstacle : Obstacles)
+//    {
+//        if (obstacle)
+//        {
+//            // For example, detach the obstacle if it's attached to something
+//            obstacle->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+//        }
+//    }
+//
+//    for (ACoin* coin : Coins)
+//    {
+//        if (coin)
+//        {
+//            // Similarly, detach the coin if needed
+//            coin->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+//        }
+//    }
+//
+//    // Clear the arrays
+//    Obstacles.Empty();
+//    Coins.Empty();
+//}
 
 // Called every frame
 void AFloorTile::Tick(float DeltaTime)
@@ -27,17 +55,62 @@ void AFloorTile::Tick(float DeltaTime)
 
 }
 
+void AFloorTile::DestroyTile()
+{
+    for (AObstacle* obstacle : Obstacles)
+    {
+        if (obstacle)
+        {
+            obstacle->Destroy();
+        }
+    }
+
+    for (ACoin* coin : Coins)
+    {
+        if (coin)
+        {
+            coin->Destroy();
+        }
+    }
+
+    Obstacles.Empty();
+    Coins.Empty();
+
+    // Now destroy the floor tile itself
+    Destroy();
+}
+
 void AFloorTile::MoveTile(float DeltaTime, float speed)
 {
     SetActorLocation(GetActorLocation() + FVector(speed, 0.0f, 0.0f));
 }
 
-void AFloorTile::SpawnObstacle(FVector& SpawnLocation)
+void AFloorTile::SpawnObstacle(FVector SpawnLocation)
 {
-	//GetWorld->SpawnActor<AActor>(Obstacle, SpawnLocation, FRotator::ZeroRotator);
+    if (!Obstacle) // Check if the Obstacle class is set
+    {
+		UE_LOG(LogTemp, Warning, TEXT("ObstacleClass not set in FloorTile"));
+		return;
+	}
+
+    //if (GEngine)
+    //{
+    //    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("FloorTile: Obstacle Spawn called"));
+    //}
+
+    AObstacle* obstacle = GetWorld()->SpawnActor<AObstacle>(Obstacle, SpawnLocation, FRotator::ZeroRotator);
+    if (!obstacle)
+    {
+		UE_LOG(LogTemp, Warning, TEXT("Failed to spawn obstacle"));
+	}
+    else {
+        obstacle->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+        Obstacles.Add(obstacle);
+    }
+
 }
 
-void AFloorTile::SpawnCoins(FVector& SpawnLocation)
+void AFloorTile::SpawnCoins(FVector SpawnLocation)
 {
     if (!Coin) // Check if the Coin class is set
     {

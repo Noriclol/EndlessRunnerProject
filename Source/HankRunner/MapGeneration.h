@@ -8,7 +8,8 @@
 #include "Components/BoxComponent.h"
 #include "MapData.h"
 #include "FloorTile.h"
-
+#include "HankGameMode.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "MapGeneration.generated.h"
 
@@ -29,7 +30,7 @@ public:
 	TSubclassOf<class AFloorTile> Tile_Base;
 
 
-	float cut_off = -1000.0f;
+	float cut_off = -1700.0f;
 	float gamespeed = 5.0f;
 
 	bool gameover = false;

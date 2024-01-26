@@ -20,6 +20,11 @@ class HANKRUNNER_API AHankGameMode : public AGameModeBase
 
 
 public:
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool game_over;
+
 	class AGameCamera* camera;
 	class AHankController* playerController;
 
@@ -32,6 +37,8 @@ private:
 protected:
 	virtual void BeginPlay() override;
 
+	virtual void Tick(float DeltaTime) override;
+
 	UFUNCTION(BlueprintCallable)
 	void SpawnPawns();
 	UFUNCTION(BlueprintCallable)
@@ -39,6 +46,8 @@ protected:
 
 	void IncrementLaneOne();
 	void IncrementLaneTwo();
+
+
 
 
 public:

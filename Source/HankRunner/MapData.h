@@ -15,9 +15,7 @@ public:
 
 	TArray<AFloorTile*> Stack;
 
-	TArray<AActor*> Obstacles;
 
-	TArray<AActor*> Collectables;
 
 	bool SetCoinsOnNextTile;
 	bool firstTile = true;

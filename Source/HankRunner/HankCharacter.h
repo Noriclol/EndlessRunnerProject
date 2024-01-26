@@ -6,6 +6,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "HankGameMode.h"
+
 
 #include "HankCharacter.generated.h"
 
@@ -21,16 +23,23 @@ class HANKRUNNER_API AHankCharacter : public ACharacter
 
 private:
 
+
+
+	float x_position;
+public:
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	float playerSpeed = 5.0f;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool hasDied = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int lives = 3;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int coins = 0;
-
-public:
-
-
 
 protected:
 

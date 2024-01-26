@@ -10,15 +10,14 @@ AHankGameMode::AHankGameMode()
 {
     PrimaryActorTick.bCanEverTick = true;
 
-
     // Initialize variables in constructor
-
 }
 
 void AHankGameMode::BeginPlay()
 {
+    PrimaryActorTick.bCanEverTick = true;
     playerController = Cast<AHankController>(GetWorld()->GetFirstPlayerController());
-
+    game_over = false;
 
     if (playerController == nullptr)
     {
@@ -55,11 +54,12 @@ void AHankGameMode::BeginPlay()
 		camera = GetWorld()->SpawnActor<AGameCamera>(GameCameraClass, /*Location*/ FVector(-700.0, 0, 720.0), /*Rotation*/ FRotator(-30, 0, 0));
         playerController->SetViewTargetWithBlend(camera); // Specify blend parameters if needed
     }
+}
 
+void AHankGameMode::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
 
-    //SpawnMap();
-
-    //SpawnPawns();
 }
 
 void AHankGameMode::SpawnPawns()
