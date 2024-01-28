@@ -24,8 +24,7 @@ void AHankCharacter::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
     SetActorLocation(FVector(x_position, GetActorLocation().Y, GetActorLocation().Z));
-    //if (!hasDied)
-    //    playerSpeed += 0.001f;
+
 }
 
 
@@ -36,6 +35,7 @@ void AHankCharacter::StopMoving()
     hasDied = true;
 }
 
+
 void AHankCharacter::Jump()
 {
     Super::Jump();
@@ -45,10 +45,6 @@ void AHankCharacter::LeftRight(float Value)
 {
     if (Value != 0.0f)
     {
-        //if (GEngine)
-        //{
-        //    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("EEEEEEEEEEEEE"));
-        //}
         AddMovementInput(GetActorRightVector(), Value);
     }
 }
@@ -62,18 +58,19 @@ void AHankCharacter::Die()
     if (MyGameMode)
     {
         MyGameMode->game_over = true;
-        // MyGameMode is successfully cast and can be used here
+        OnCharacterHasDied();
     }
-    else
+}
+
+bool AHankCharacter::LooseLife()
+{
+    lives--;
+    if (lives <= 0)
     {
-        // Handle the case where the GameMode is not of type AHankGameMode
-    }
-
-
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("DEAD"));
+		Die();
+		return true;
 	}
+    return false;
 }
 
 

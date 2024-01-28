@@ -61,12 +61,17 @@ public:
 
 	void Die();
 
+	UFUNCTION(BlueprintCallable)
 	bool LooseLife();
 
 	void PickupCoin();
 
 	UFUNCTION(BlueprintCallable)
 	void LeftRight(float Value);
+
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCharacterHasDied();
 
 protected:
 

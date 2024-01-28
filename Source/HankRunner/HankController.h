@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "HankGameMode.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "HankController.generated.h"
 
