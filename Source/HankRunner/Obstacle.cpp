@@ -26,5 +26,11 @@ void AObstacle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (floating)
+	{
+		SetActorLocation(GetActorLocation() + FVector(0, 0, 1) * float_height);
+		float_height += 0.1f;
+	}
+
 }
 

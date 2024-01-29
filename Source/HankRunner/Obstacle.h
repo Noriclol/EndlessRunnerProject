@@ -15,6 +15,8 @@ public:
 	// Sets default values for this actor's properties
 	AObstacle();
 
+	bool floating = false;
+	float float_height = 0.0f;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

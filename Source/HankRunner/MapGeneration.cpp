@@ -38,7 +38,7 @@ void AMapGeneration::Tick(float DeltaTime)
         if (mapgenerated)
             MoveMap();
 
-        gamespeed += 0.001f;
+        gamespeed += gamespeed_increment;
 
         //loop through all the tiles in maps.
         for (int i = 0; i < TrackOne.Stack.Num(); i++)
@@ -48,6 +48,15 @@ void AMapGeneration::Tick(float DeltaTime)
             if (tile->GetActorLocation().X < cut_off)
             {
                 Increment(&TrackOne);
+                TrackOne.dodged_rows++;
+
+                if (TrackOne.dodged_rows >= dodged_rows_required)
+                {
+                    FloatObstacle(&TrackOne);
+                    if (GEngine)
+                        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Player One Dodged enough rows, removing future obstacle"));
+                    TrackOne.dodged_rows = 0;
+                }
             }
         }
         for (int i = 0; i < TrackTwo.Stack.Num(); i++)
@@ -57,9 +66,26 @@ void AMapGeneration::Tick(float DeltaTime)
             if (tile->GetActorLocation().X < cut_off)
             {
                 Increment(&TrackTwo);
+                TrackTwo.dodged_rows++;
+
+                if (TrackTwo.dodged_rows >= dodged_rows_required)
+                {
+                    FloatObstacle(&TrackTwo);
+                    if (GEngine)
+                        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Player Two Dodged enough rows, removing future obstacle"));
+					TrackTwo.dodged_rows = 0;
+				}
             }
         }
     }
+}
+
+void AMapGeneration::FloatObstacle(MapData* data)
+{
+    int random = FMath::RandRange(1, 2);
+    AObstacle* obstacle = data->Stack[5]->Obstacles[random - 1];
+    obstacle->floating = true;
+
 }
 
 void AMapGeneration::StartTiles()
@@ -205,18 +231,24 @@ void AMapGeneration::PopulateTile(AFloorTile* NewTile)
             NewTile->SpawnObstacle(Spawnpoint_Left->GetComponentLocation());
             NewTile->SpawnObstacle(Spawnpoint_Right->GetComponentLocation());
 
+            NewTile->SpawnCoins(Spawnpoint_Middle->GetComponentLocation());
+
             break;
 
         case 2:
 
             NewTile->SpawnObstacle(Spawnpoint_Left->GetComponentLocation());
             NewTile->SpawnObstacle(Spawnpoint_Middle->GetComponentLocation());
+
+            NewTile->SpawnCoins(Spawnpoint_Right->GetComponentLocation());
             break;
 
         case 3:
 
             NewTile->SpawnObstacle(Spawnpoint_Middle->GetComponentLocation());
             NewTile->SpawnObstacle(Spawnpoint_Right->GetComponentLocation());
+
+            NewTile->SpawnCoins(Spawnpoint_Left->GetComponentLocation());
             break;
 
         }

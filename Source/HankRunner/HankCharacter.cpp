@@ -1,5 +1,6 @@
 #include "HankCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "FileHandler.h"
 
 AHankCharacter::AHankCharacter()
 {
@@ -67,7 +68,42 @@ bool AHankCharacter::LooseLife()
     lives--;
     if (lives <= 0)
     {
+		int score = FMath::RoundToInt((float)coins * 100);
+		bool bOutSuccess;
+		FString OutMessageInfo;
+		FString scoreString = FileHandler::ReadStringFromFile("C:/Temp/HighScore.txt", bOutSuccess, OutMessageInfo);
+		if (!bOutSuccess)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, OutMessageInfo);
+			FileHandler::WriteStringToFile("C:/Temp/HighScore.txt", FString::FromInt(score), bOutSuccess, OutMessageInfo);
+
+			if (!bOutSuccess)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::White, OutMessageInfo);
+			}
+		}
+		else
+		{
+			scoreString.Append(" ");
+			scoreString.Append(FString::FromInt(score));
+
+			FileHandler::WriteStringToFile("C:/Temp/HighScore.txt", scoreString, bOutSuccess, OutMessageInfo);
+
+			if (!bOutSuccess)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::White, OutMessageInfo);
+			}
+		}
+
+
+		lives = 3;
+		coins = 0;
+
 		Die();
+
+		UGameplayStatics::OpenLevel(GetWorld(), "MainMenu");
+
+		
 		return true;
 	}
     return false;

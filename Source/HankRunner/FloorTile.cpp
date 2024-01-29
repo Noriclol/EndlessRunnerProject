@@ -118,16 +118,16 @@ void AFloorTile::SpawnCoins(FVector SpawnLocation)
         return;
     }
 
-    // Spawn parameters
-    FActorSpawnParameters SpawnParams;
-    SpawnParams.Owner = this;
-    SpawnParams.Instigator = GetInstigator();
 
     // Spawn the coin
-    ACoin* SpawnedCoin = GetWorld()->SpawnActor<ACoin>(Coin, SpawnLocation, FRotator::ZeroRotator, SpawnParams);
+    ACoin* SpawnedCoin = GetWorld()->SpawnActor<ACoin>(Coin, SpawnLocation, FRotator::ZeroRotator);
     if (!SpawnedCoin)
     {
         UE_LOG(LogTemp, Warning, TEXT("Failed to spawn coin"));
+    }
+    else {
+        SpawnedCoin->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+        Coins.Add(SpawnedCoin);
     }
 }
 

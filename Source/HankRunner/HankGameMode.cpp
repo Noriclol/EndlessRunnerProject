@@ -4,7 +4,10 @@
 #include "GameCamera.h"
 #include "Components/BoxComponent.h"
 #include "UObject/UnrealTypePrivate.h"
+#include "FileHandler.h"
 #include "MapGeneration.h"
+
+
 
 AHankGameMode::AHankGameMode()
 {
@@ -93,11 +96,39 @@ void AHankGameMode::SpawnPawns()
 }
 
 
+FString AHankGameMode::GetHighScore()
+{
+    bool bOutSuccess;
+    FString OutMessageInfo;
+    return FileHandler::ReadStringFromFile("C:/Temp/HighScore.txt", bOutSuccess, OutMessageInfo);
+}
+
 
 void AHankGameMode::IncrementLaneOne()
 {
     mapGeneration->Increment(&mapGeneration->TrackOne);
 }
+
+void AHankGameMode::FloatObstacleOne()
+{
+    mapGeneration->FloatObstacle(&mapGeneration->TrackOne);
+}
+
+void AHankGameMode::FloatObstacleTwo()
+{
+    mapGeneration->FloatObstacle(&mapGeneration->TrackOne);
+}
+
+void AHankGameMode::BreakStreakOne()
+{
+    mapGeneration->TrackOne.BreakStreak();
+}
+
+void AHankGameMode::BreakStreakTwo()
+{
+    mapGeneration->TrackTwo.BreakStreak();
+}
+
 
 void AHankGameMode::IncrementLaneTwo()
 {

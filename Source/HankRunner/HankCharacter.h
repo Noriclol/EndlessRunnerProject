@@ -28,17 +28,17 @@ private:
 	float x_position;
 public:
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly)
 	float playerSpeed = 5.0f;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadOnly)
 	bool hasDied = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadOnly)
 	int lives = 3;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadOnly)
 	int coins = 0;
 
 protected:
@@ -64,6 +64,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool LooseLife();
 
+	UFUNCTION(BlueprintCallable)
 	void PickupCoin();
 
 	UFUNCTION(BlueprintCallable)

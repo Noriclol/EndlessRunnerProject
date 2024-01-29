@@ -8,6 +8,7 @@
 #include "Components/BoxComponent.h"
 #include "MapData.h"
 #include "FloorTile.h"
+#include "Obstacle.h"
 #include "HankGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -32,10 +33,13 @@ public:
 
 	float cut_off = -1700.0f;
 	float gamespeed = 5.0f;
+	float gamespeed_increment = 0.002f;
+
 
 	bool gameover = false;
 	bool mapgenerated = false;
 
+	int dodged_rows_required = 5;
 
 	// MapData
 	MapData TrackOne;
@@ -55,6 +59,9 @@ public:
 	void Increment(MapData* data);
 
 	void SetSetCoinsOnNextTile(MapData* data, bool bNewValue);
+
+
+	void FloatObstacle(MapData* data);
 
 	void MoveMap();
 

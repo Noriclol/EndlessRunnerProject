@@ -44,11 +44,18 @@ protected:
 	void IncrementLaneOne();
 	void IncrementLaneTwo();
 
+	void FloatObstacleOne();
+	void FloatObstacleTwo();
 
-
+	UFUNCTION(BlueprintCallable)
+	void BreakStreakOne();
+	UFUNCTION(BlueprintCallable)
+	void BreakStreakTwo();
 
 public:
 
+	UFUNCTION(BlueprintCallable)
+	FString GetHighScore();
 	
 	// Pawn classes to spawn
 	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
