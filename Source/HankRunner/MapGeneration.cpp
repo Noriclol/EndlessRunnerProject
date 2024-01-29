@@ -5,9 +5,6 @@
 AMapGeneration::AMapGeneration()
 {
 	PrimaryActorTick.bCanEverTick = true;
-    RenderDistance = 10;
-    TrackOne = MapData(FVector(0, -400.0, 0));
-    TrackTwo = MapData(FVector(0, 400.0, 0));
 }
 
 
@@ -16,7 +13,10 @@ AMapGeneration::AMapGeneration()
 void AMapGeneration::BeginPlay()
 {
 	Super::BeginPlay();
-	
+    RenderDistance = 10;
+    TrackOne = MapData(FVector(0, -400.0, 0));
+    TrackTwo = MapData(FVector(0, 400.0, 0));
+    NewStartTiles();
 }
 
 // Called every frame
@@ -63,6 +63,12 @@ void AMapGeneration::Tick(float DeltaTime)
 }
 
 void AMapGeneration::StartTiles()
+{
+
+}
+
+
+void AMapGeneration::NewStartTiles()
 {
     //GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Start Tiles Called"));
     for (int i = 0; i < RenderDistance; i++)
@@ -119,14 +125,6 @@ void AMapGeneration::CreateTile(MapData* data)
             PopulateTile(NewTile);
         }
     }
-
-    //if (NewTile) 
-    //{
-    //    data->Stack.Add(NewTile);
-    //    PopulateTile(NewTile);
-    //    //if (mapgenerated)
-    //    //    PopulateTile(NewTile);
-    //}
 }
 
 
@@ -203,10 +201,6 @@ void AMapGeneration::PopulateTile(AFloorTile* NewTile)
         int random = FMath::RandRange(1, 3);
         switch (random) {
         case 1:
-            //if (GEngine)
-            //{
-            //    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("PopulateTile Called: 1"));
-            //}
 
             NewTile->SpawnObstacle(Spawnpoint_Left->GetComponentLocation());
             NewTile->SpawnObstacle(Spawnpoint_Right->GetComponentLocation());
@@ -214,20 +208,12 @@ void AMapGeneration::PopulateTile(AFloorTile* NewTile)
             break;
 
         case 2:
-            //if (GEngine)
-            //{
-            //    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("PopulateTile Called: 2"));
-            //}
 
             NewTile->SpawnObstacle(Spawnpoint_Left->GetComponentLocation());
             NewTile->SpawnObstacle(Spawnpoint_Middle->GetComponentLocation());
             break;
 
         case 3:
-            //if (GEngine)
-            //{
-            //    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("PopulateTile Called: 3"));
-            //}
 
             NewTile->SpawnObstacle(Spawnpoint_Middle->GetComponentLocation());
             NewTile->SpawnObstacle(Spawnpoint_Right->GetComponentLocation());

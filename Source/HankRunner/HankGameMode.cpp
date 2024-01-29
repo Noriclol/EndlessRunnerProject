@@ -92,10 +92,7 @@ void AHankGameMode::SpawnPawns()
 	}
 }
 
-void AHankGameMode::SpawnMap()
-{
-    mapGeneration->StartTiles();
-}
+
 
 void AHankGameMode::IncrementLaneOne()
 {

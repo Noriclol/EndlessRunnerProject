@@ -39,10 +39,7 @@ protected:
 
 	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION(BlueprintCallable)
 	void SpawnPawns();
-	UFUNCTION(BlueprintCallable)
-	void SpawnMap();
 
 	void IncrementLaneOne();
 	void IncrementLaneTwo();

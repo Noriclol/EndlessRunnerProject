@@ -45,8 +45,9 @@ public:
 	AMapGeneration();
 	// Sets default values for this actor's properties
 
-	UFUNCTION(BlueprintCallable)
 	void StartTiles();
+
+	void NewStartTiles();
 
 	void PopTile(MapData* data);
 	void CreateTile(MapData* data);
